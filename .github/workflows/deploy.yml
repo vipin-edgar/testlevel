@@ -64,4 +64,4 @@ jobs:
       # Step 8: Run Ansible Playbook
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook -i ansible/aws_ec2.yaml ansible/playbook3.yaml --private-key /modules/compute/example-key
+          ansible-playbook -i aws_ec2.yaml ansible/playbook3.yaml --private-key /modules/compute/example-key
