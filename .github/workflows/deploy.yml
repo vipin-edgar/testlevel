@@ -60,14 +60,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install ansible boto3
 
-      # Step 7: Generate dynamic inventory using AWS EC2 plugin
-      - name: Generate dynamic inventory
-        run: |
-          mkdir -p inventory
-          echo "[all]" > inventory/hosts
-          ansible-inventory -i ansible/aws_ec2.yml --list >> inventory/hosts
 
       # Step 8: Run Ansible Playbook
       - name: Run Ansible Playbook
         run: |
-          ansible-playbook -i inventory/aws_ec2.yaml ansible/playbook3.yaml
+          ansible-playbook -i ansible/aws_ec2.yaml ansible/playbook3.yaml
