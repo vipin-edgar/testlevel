@@ -25,10 +25,6 @@ jobs:
         with:
           terraform_version: latest
 
-      # Step to change to the dev directory where the main.tf is located
-      - name: Change to dev directory
-        run: cd dev
-
       # Step 1: Terraform Init
       - name: Terraform Init
         run: terraform init
