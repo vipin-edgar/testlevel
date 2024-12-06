@@ -1,0 +1,47 @@
+name: Configure AWS Credentials and Deploy Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}  # This is required for temporary credentials
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: latest
+
+      # Step to change to the dev directory where the main.tf is located
+      - name: Change to dev directory
+        run: cd dev
+
+      # Step 1: Terraform Init
+      - name: Terraform Init
+        run: terraform init
+
+      # Step 2: Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Step 3: Generate Terraform Plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # Step 4: Apply Terraform Plan
+      - name: Terraform Apply
+        if: github.event_name == 'push' # Apply only on push events
+        run: terraform apply -auto-approve tfplan
