@@ -1,4 +1,3 @@
-resource "aws_instance" "webserver" {
    # Generate a new private key
 resource "tls_private_key" "example_key" {
   algorithm = "RSA"
@@ -15,6 +14,7 @@ resource "local_file" "private_key" {
   content  = tls_private_key.example_key.private_key_pem
   filename = "${path.module}/example-key.pem"  # The local path to save the private key
 }
+resource "aws_instance" "webserver" {
   ami           = var.ami_id
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
