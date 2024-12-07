@@ -3,7 +3,7 @@ resource "aws_instance" "webserver" {
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
   security_groups = [var.security_group_id]
-  key_name      = aws_key_pair.vockey.key_name
+  key_name      = "vockey"
 
   user_data = var.user_data
 
