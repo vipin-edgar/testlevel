@@ -47,5 +47,6 @@ jobs:
       - name: Display Private Key Content
         run: |
               echo "Private key content:"
+             
               terraform output -raw private_key_content
       
