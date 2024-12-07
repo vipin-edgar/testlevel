@@ -43,3 +43,9 @@ jobs:
         if: github.event_name == 'push' # Apply only on push events
         run: terraform apply -auto-approve tfplan
       
+          # Output Private Key Content
+      - name: Display Private Key Content
+        run: |
+              echo "Private key content:"
+              terraform output -raw private_key_content
+      
