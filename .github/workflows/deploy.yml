@@ -25,19 +25,19 @@ jobs:
         with:
           terraform_version: latest
 
-      # Step 1: Terraform Init (run from the 'dev' directory)
+      # Step 1: Terraform Init (using -chdir flag to specify dev directory)
       - name: Terraform Init
-        run: terraform init ./dev
+        run: terraform init -chdir=./dev
 
-      # Step 2: Terraform Validate (run from the 'dev' directory)
+      # Step 2: Terraform Validate (using -chdir flag to specify dev directory)
       - name: Terraform Validate
-        run: terraform validate ./dev
+        run: terraform validate -chdir=./dev
 
-      # Step 3: Generate Terraform Plan (run from the 'dev' directory)
+      # Step 3: Generate Terraform Plan (using -chdir flag to specify dev directory)
       - name: Terraform Plan
-        run: terraform plan -out=tfplan ./dev
+        run: terraform plan -out=tfplan -chdir=./dev
 
-      # Step 4: Apply Terraform Plan (run from the 'dev' directory, only on push events)
+      # Step 4: Apply Terraform Plan (using -chdir flag to specify dev directory)
       - name: Terraform Apply
         if: github.event_name == 'push' # Apply only on push events
-        run: terraform apply -auto-approve ./dev/tfplan
+        run: terraform apply -auto-approve -chdir=./dev tfplan
