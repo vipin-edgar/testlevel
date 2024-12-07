@@ -24,22 +24,20 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: latest
-      
 
-      # Step 1: Terraform Init
+      # Step 1: Terraform Init (run from the 'dev' directory)
       - name: Terraform Init
-        run: terraform init
+        run: terraform init ./dev
 
-      # Step 2: Terraform Validate
+      # Step 2: Terraform Validate (run from the 'dev' directory)
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform validate ./dev
 
-      # Step 3: Generate Terraform Plan
+      # Step 3: Generate Terraform Plan (run from the 'dev' directory)
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan ./dev
 
-      # Step 4: Apply Terraform Plan
+      # Step 4: Apply Terraform Plan (run from the 'dev' directory, only on push events)
       - name: Terraform Apply
         if: github.event_name == 'push' # Apply only on push events
-        run: terraform apply -auto-approve tfplan
-      
+        run: terraform apply -auto-approve ./dev/tfplan
